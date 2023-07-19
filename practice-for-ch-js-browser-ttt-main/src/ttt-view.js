@@ -19,34 +19,37 @@ class View {
       }
     }
     this.el.appendChild(grid);
-    grid.addEventListener('click', this.handleClick.bind(this))
+    grid.addEventListener('click',(e)=> this.handleClick(e))
   }
 
-  
+  // bindEvents() {
+  //   const grid = document.querySelector('.grid');
+  //   grid.addEventListener('click', event => this.handleClick(event));
+  // }
   
   handleClick(e) {
     const cell = e.target;
     const row = parseInt(cell.dataset.row)
     const col = parseInt(cell.dataset.col)
     const pos = [row, col]
-
-    if (this.game.board.isEmptyPos(pos)) {
-      this.game.playMove(pos)
+    console.log(pos)
+    if (this.game.board.isEmptyPos(pos) && cell.nodeName === "LI") {
+      this.game.playMove(pos);
+      this.makeMove(cell);
+    } else {
+      alert("CAN'T DO THAT")
     }
 
-    // "LI" === cell.nodeName && this.makeMove(cell);
-    if (cell.nodeName === "LI") {
-      this.makeMove(cell)
-    }
   }
 
   makeMove(square) {
-    
-// here you handle the visual changes and call play move 
-   
+    const currentPlayer = this.game.currentPlayer;
+    square.innerHTML = currentPlayer;
+    square.className = currentPlayer;
   }
   
   handleGameOver() {
+
   }
 }
 
